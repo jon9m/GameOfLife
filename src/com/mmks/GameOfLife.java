@@ -14,27 +14,24 @@ public class GameOfLife {
 		// Initialize the grid
 		cellgrid = new Cell[GRID_WIDTH][GRID_HEIGHT];
 		intializeGridCells(cellgrid);
-		
+
 		Scanner scanner = new Scanner(System.in);
 		String line = scanner.nextLine();
 		String[] cellPositions = line.split("\\|");
-		System.out.println(Arrays.toString(cellPositions));
-		
-		
-//"5, 5 | 6, 5| 7, 5 | 5, 6 |  6, 6 | 7, 6" 
-		
-		
+		System.out.println("0: " + Arrays.toString(cellPositions));
+
+		// "5, 5 | 6, 5| 7, 5 | 5, 6 | 6, 6 | 7, 6"
+
 		int liveCells[][] = new int[cellPositions.length][2];
-		
-		for(int i=0; i<cellPositions.length; i++) {
+
+		for (int i = 0; i < cellPositions.length; i++) {
 			String currCell = cellPositions[i];
 			String[] corrds = currCell.split(",");
-			
-			liveCells[i][0] =  Integer.parseInt(corrds[0].trim());
-			liveCells[i][1] =  Integer.parseInt(corrds[1].trim());
+
+			liveCells[i][0] = Integer.parseInt(corrds[0].trim());
+			liveCells[i][1] = Integer.parseInt(corrds[1].trim());
 		}
-		
-		
+
 		for (int i = 0; i < liveCells.length; i++) {
 			int liveCellX = liveCells[i][0];
 			int liveCellY = liveCells[i][1];
@@ -42,12 +39,16 @@ public class GameOfLife {
 			cellgrid[liveCellX][liveCellY].setAlive(true);
 		}
 
-		for (int i = 0; i < GRID_WIDTH; i++) {
-			for (int j = 0; j < GRID_HEIGHT; j++) {
-				// Game of life one cycle
-				gameOfLife(cellgrid[i][j]);
-				System.out.print(cellgrid[i][j]);
+		for (int k = 0; k < 100; k++) {
+			System.out.print(k+1 + ": ");
+			for (int i = 0; i < GRID_WIDTH; i++) {				
+				for (int j = 0; j < GRID_HEIGHT; j++) {
+					// Game of life one cycle
+					gameOfLife(cellgrid[i][j]);					
+					System.out.print(cellgrid[i][j]);
+				}
 			}
+			System.out.println();
 		}
 	}
 
