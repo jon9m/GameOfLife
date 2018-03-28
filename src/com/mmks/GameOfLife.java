@@ -1,5 +1,8 @@
 package com.mmks;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class GameOfLife {
 
 	private static int GRID_WIDTH = 200;
@@ -11,10 +14,27 @@ public class GameOfLife {
 		// Initialize the grid
 		cellgrid = new Cell[GRID_WIDTH][GRID_HEIGHT];
 		intializeGridCells(cellgrid);
-
-		// Set initial live cells
-//		int liveCells[][] = { { 5, 5 }, { 6, 5 }, { 7, 5 }, { 5, 6 }, { 6, 6 }, { 7, 6 } };
-		int liveCells[][] = { { 5, 5 } };
+		
+		Scanner scanner = new Scanner(System.in);
+		String line = scanner.nextLine();
+		String[] cellPositions = line.split("\\|");
+		System.out.println(Arrays.toString(cellPositions));
+		
+		
+//"5, 5 | 6, 5| 7, 5 | 5, 6 |  6, 6 | 7, 6" 
+		
+		
+		int liveCells[][] = new int[cellPositions.length][2];
+		
+		for(int i=0; i<cellPositions.length; i++) {
+			String currCell = cellPositions[i];
+			String[] corrds = currCell.split(",");
+			
+			liveCells[i][0] =  Integer.parseInt(corrds[0].trim());
+			liveCells[i][1] =  Integer.parseInt(corrds[1].trim());
+		}
+		
+		
 		for (int i = 0; i < liveCells.length; i++) {
 			int liveCellX = liveCells[i][0];
 			int liveCellY = liveCells[i][1];
