@@ -3,7 +3,7 @@ package com.mmks;
 public class Cell {
 
 	// Live or Dead
-	private boolean isAlive;
+	private boolean isAlive = false;
 
 	// Position of the cell
 	private Position cellPosition;

@@ -18,9 +18,10 @@ public class GameOfLife {
 		Scanner scanner = new Scanner(System.in);
 		String line = scanner.nextLine();
 		String[] cellPositions = line.split("\\|");
+
 		System.out.println("0: " + Arrays.toString(cellPositions));
 
-		// "5, 5 | 6, 5| 7, 5 | 5, 6 | 6, 6 | 7, 6"
+		// "5,5|6,5|7,5|5,6|6,6|7,6"
 
 		int liveCells[][] = new int[cellPositions.length][2];
 
@@ -28,23 +29,27 @@ public class GameOfLife {
 			String currCell = cellPositions[i];
 			String[] corrds = currCell.split(",");
 
-			liveCells[i][0] = Integer.parseInt(corrds[0].trim());
-			liveCells[i][1] = Integer.parseInt(corrds[1].trim());
+			try {
+				liveCells[i][0] = Integer.parseInt(corrds[0].trim());
+				liveCells[i][1] = Integer.parseInt(corrds[1].trim());
+			} catch (Exception e) {
+
+			}
 		}
 
 		for (int i = 0; i < liveCells.length; i++) {
 			int liveCellX = liveCells[i][0];
 			int liveCellY = liveCells[i][1];
 
-			cellgrid[liveCellX][liveCellY].setAlive(true);
+			cellgrid[liveCellX][liveCellY].setAlive(true);				
 		}
 
 		for (int k = 0; k < 100; k++) {
-			System.out.print(k+1 + ": ");
-			for (int i = 0; i < GRID_WIDTH; i++) {				
+			System.out.print(k + 1 + ": ");
+			for (int i = 0; i < GRID_WIDTH; i++) {
 				for (int j = 0; j < GRID_HEIGHT; j++) {
 					// Game of life one cycle
-					gameOfLife(cellgrid[i][j]);					
+					//gameOfLife(cellgrid[i][j]);
 					System.out.print(cellgrid[i][j]);
 				}
 			}
@@ -69,8 +74,7 @@ public class GameOfLife {
 		int liveCount = 0;
 		for (int i = 0; i < cell.getNeighbours().length; i++) {
 			Position neighbourPosition = cell.getNeighbours()[i];
-			if ((neighbourPosition != null)
-					&& (cellgrid[neighbourPosition.getX()][neighbourPosition.getY()].isAlive())) {
+			if ((neighbourPosition != null) && (cellgrid[neighbourPosition.getX()][neighbourPosition.getY()].isAlive())) {
 				liveCount++;
 			}
 		}
@@ -80,16 +84,15 @@ public class GameOfLife {
 	public static void gameOfLife(Cell cell) {
 		int liveNeighbours = getLiveNeighbourCount(cell);
 
-		if (liveNeighbours < 2) {
-			cell.setAlive(false);
-		}
-		if (liveNeighbours >= 2 && liveNeighbours <= 3) {
-			cell.setAlive(true);
-		}
-		if (liveNeighbours > 3) {
-			cell.setAlive(false);
-		}
-		if (liveNeighbours == 3) {
+		if (cell.isAlive()) {
+			if (liveNeighbours < 2) {
+				cell.setAlive(false);
+			} else if (liveNeighbours == 2 || liveNeighbours == 3) {
+				cell.setAlive(true);
+			} else if (liveNeighbours > 3) {
+				cell.setAlive(false);
+			}
+		} else if (liveNeighbours == 3) {
 			cell.setAlive(true);
 		}
 
