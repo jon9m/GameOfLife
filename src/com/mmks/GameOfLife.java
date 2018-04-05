@@ -45,16 +45,30 @@ public class GameOfLife {
 		}
 
 		for (int k = 0; k < 100; k++) {
-			System.out.print(k + 1 + ": ");
 			for (int i = 0; i < GRID_WIDTH; i++) {
 				for (int j = 0; j < GRID_HEIGHT; j++) {
 					// Game of life one cycle
-					gameOfLife(cellgrid[i][j]);
+					gameOfLife(cellgrid[i][j]);					
+				}
+			}
+		}
+		
+		//Set nest life values
+		for (int k = 0; k < 100; k++) {
+			System.out.print(k + 1 + ": ");
+			for (int i = 0; i < GRID_WIDTH; i++) {
+				for (int j = 0; j < GRID_HEIGHT; j++) {
+					if (cellgrid[i][j].isNextLife()) {
+						cellgrid[i][j].setAlive(true);
+					} else {
+						cellgrid[i][j].setAlive(false);
+					}
+					
 					System.out.print(cellgrid[i][j]);
 				}
 			}
 			System.out.println();
-		}
+		}		
 	}
 
 	private static void intializeGridCells(Cell[][] cellgrid) {
@@ -86,14 +100,14 @@ public class GameOfLife {
 
 		if (cell.isAlive()) {
 			if (liveNeighbours < 2) {
-				cell.setAlive(false);
+				cell.setNextLife(false);
 			} else if (liveNeighbours == 2 || liveNeighbours == 3) {
-				cell.setAlive(true);
+				cell.setNextLife(true);
 			} else if (liveNeighbours > 3) {
-				cell.setAlive(false);
+				cell.setNextLife(false);
 			}
 		} else if (liveNeighbours == 3) {
-			cell.setAlive(true);
+			cell.setNextLife(true);
 		}
 
 	}

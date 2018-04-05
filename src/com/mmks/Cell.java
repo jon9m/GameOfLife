@@ -4,6 +4,9 @@ public class Cell {
 
 	// Live or Dead
 	private boolean isAlive = false;
+	
+	// Live or die next
+	private boolean nextLife = false;
 
 	// Position of the cell
 	private Position cellPosition;
@@ -38,6 +41,14 @@ public class Cell {
 
 	public void setAlive(boolean isAlive) {
 		this.isAlive = isAlive;
+	}	
+
+	public boolean isNextLife() {
+		return nextLife;
+	}
+
+	public void setNextLife(boolean nextLife) {
+		this.nextLife = nextLife;
 	}
 
 	@Override
